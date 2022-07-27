@@ -42,7 +42,7 @@ function App() {
       </nav>
       <main className={"emails"}>
         {emails.map(email => (
-          <div className="email">
+          <div className={email.read ? 'email read' : 'email unread'}>
             <input className="read-checkbox" type='checkbox' checked={email.read} />
             <input className="star-checkbox" type='checkbox' checked={email.starred} />
             <span>{email.sender}</span>
