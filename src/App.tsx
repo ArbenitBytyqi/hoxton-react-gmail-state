@@ -5,13 +5,31 @@ import initialEmails from "./data/emails";
 import "./App.css";
 import { useState } from "react";
 
+type Email = {
+  id: number
+  sender: string
+  title: string
+  starred: boolean
+  read: boolean
+}
+
 function App() {
   // Use initialEmails for state
   const [emails, setEmails] = useState(initialEmails)
 
-  function toggleRead() { }
+  function toggleRead(email: Email) {
+    const emailsCopy: Email[] = structuredClone(emails)
+    const match = emailsCopy.find(target => target.id === email.id)!
+    match.read = !match.read
+    setEmails(emailsCopy)
+  }
 
-  function toggleStarred() { }
+  function toggleStarred(email: Email) {
+    const emailsCopy: Email[] = structuredClone(emails)
+    const match = emailsCopy.find(target => target.id === email.id)!
+    match.starred = !match.starred
+    setEmails(emailsCopy)
+  }
 
   return (
     <div className="app">
@@ -51,20 +69,14 @@ function App() {
               type='checkbox'
               checked={email.read}
               onClick={() => {
-                const emailsCopy = structuredClone(emails)
-                const match = emailsCopy.find(target => target.id === email.id)
-                match.read = !match.read
-                setEmails(emailsCopy)
+                toggleRead(email)
               }}
             />
             <input className="star-checkbox"
               type='checkbox'
               checked={email.starred}
               onClick={() => {
-                const emailsCopy = structuredClone(emails)
-                const match = emailsCopy.find(target => target.id === email.id)
-                match.starred = !match.starred
-                setEmails(emailsCopy)
+                toggleStarred(email)
               }}
             />
             <span>{email.sender}</span>
