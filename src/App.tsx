@@ -3,10 +3,11 @@ import Header from "./components/Header";
 import initialEmails from "./data/emails";
 
 import "./App.css";
+import { useState } from "react";
 
 function App() {
   // Use initialEmails for state
-  console.log(initialEmails);
+  const [emails, setEmails] = useState(initialEmails)
 
   return (
     <div className="app">
@@ -15,14 +16,14 @@ function App() {
         <ul className="inbox-list">
           <li
             className="item active"
-            // onClick={() => {}}
+          // onClick={() => {}}
           >
             <span className="label">Inbox</span>
             <span className="count">?</span>
           </li>
           <li
             className="item"
-            // onClick={() => {}}
+          // onClick={() => {}}
           >
             <span className="label">Starred</span>
             <span className="count">?</span>
@@ -34,12 +35,21 @@ function App() {
               id="hide-read"
               type="checkbox"
               checked={false}
-              // onChange={() => {}}
+            // onChange={() => {}}
             />
           </li>
         </ul>
       </nav>
-      <main className="emails">{/* Render a list of emails here */}</main>
+      <main className={"emails"}>
+        {emails.map(email => (
+          <div className="email">
+            <input className="read-checkbox" type='checkbox' checked={email.read} />
+            <input className="star-checkbox" type='checkbox' checked={email.starred} />
+            <span>{email.sender}</span>
+            <span className="title">{email.title}</span>
+          </div>
+        ))}
+      </main>
     </div>
   );
 }
